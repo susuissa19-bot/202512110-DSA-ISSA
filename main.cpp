@@ -1,50 +1,65 @@
+#include "notepad.h"
 #include <iostream>
-#include <vector>
-#include "student.h"
+#include <string>
+
 using namespace std;
 
 int main() {
-
-    vector<Student> students;
     int choice;
-
+    string filename;
+    
+    // Display menu repeatedly using a do-while loop
     do {
-        cout << "==== STUDENT MANAGEMENT SYSTEM ====" << endl;
-        cout << "1. Add student" << endl;
-        cout << "2. Display students" << endl;
-        cout << "3. Search student" << endl;
-        cout << "4. Update student" << endl;
-        cout << "5. Delete student" << endl;
-        cout << "6. Exit" << endl;
-        cout << "Enter your choice: ";
-        cin >> choice;
-
-        switch (choice)
-    {
-    case 1:
-       addStudent(students);
-        break;
-     case 2:
-       displayStudents(students);
-        break;
-     case 3:
-       searchStudent(students);
-        break;
-     case 4:
-       updateStudent(students);
-        break;
-     case 5:
-       deleteStudent(students);
-        break;
-     case 6:
-       cout << "Exiting..." << endl;
-        break;
         
-    default:
-       cout << "Invalid choice. " << endl;
-        break;
-    }
-    } while (choice != 6);
-
+        cout << "===SIMPLE NOTEPAD=== " << endl;
+        cout << "1. Write File" << endl;
+        cout << "2. Read File" << endl;
+        cout << "3. Append File" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter choice: ";
+        cin >> choice;
+        
+        // Handle invalid numerical menu choices or non-integer inputs safely
+        if (cin.fail()) {
+            cin.clear(); // clear error flag
+            string dummy;
+            cin >> dummy; // discard bad input
+            choice = 0;   // force default switch case
+        }
+        
+        // Use switch statements for menu choices
+        switch (choice) {
+            case 1:
+                cout << "Enter filename to create/write (e.g., notes.txt): ";
+                cin >> filename;
+                cin.ignore(); // Clear the input buffer before using getline
+                writeFile(filename);
+                break;
+                
+            case 2:
+                cout << "Enter filename to read: ";
+                cin >> filename;
+                cin.ignore();
+                readFile(filename);
+                break;
+                
+            case 3:
+                cout << "Enter filename to append to: ";
+                cin >> filename;
+                cin.ignore();
+                appendFile(filename);
+                break;
+                
+            case 4:
+                cout << "Exiting the program. " << endl;
+                break;
+                
+            default:
+                cout << "Invalid choice! Please select a valid option (1-4)." << endl;
+                break;
+        }
+        
+    } while (choice != 4); 
+    
     return 0;
 }
