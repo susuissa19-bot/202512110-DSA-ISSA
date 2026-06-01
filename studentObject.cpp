@@ -4,7 +4,6 @@
 
 using namespace std;
 
-// Requirement 1: Create a Student Object to store student information
 class Student {
 private:
     string rollNumber;
@@ -57,7 +56,6 @@ int countRecords(string filename) {
     return count;
 }
 
-// Requirement 2: Implement a function to display all students stored in the file
 void displayAllStudents(string filename) {
     ifstream file(filename);
     if (!file.is_open()) {
@@ -77,7 +75,6 @@ void displayAllStudents(string filename) {
     file.close();
 }
 
-// Requirement 3: Search for a student by Roll Number
 void searchStudent(string filename) {
     string targetRoll;
     cout << "\nEnter Roll Number to search: ";
@@ -109,7 +106,6 @@ void searchStudent(string filename) {
     }
 }
 
-// Requirement 4: Update student information permanently
 void updateStudent(string filename) {
     string targetRoll;
     cout << "\nEnter Roll Number to update: ";
@@ -121,7 +117,6 @@ void updateStudent(string filename) {
         return;
     }
 
-    // Dynamically allocate array instead of using std::vector
     Student* studentArray = new Student[totalRecords];
     
     ifstream inFile(filename);
@@ -129,7 +124,6 @@ void updateStudent(string filename) {
     int index = 0;
     bool found = false;
 
-    // Load file content into memory
     while (getline(inFile, roll, ',') && getline(inFile, name, ',') && getline(inFile, ageStr)) {
         studentArray[index].setRollNumber(roll);
         studentArray[index].setName(name);
@@ -156,7 +150,7 @@ void updateStudent(string filename) {
     if (!found) {
         cout << "\nStudent not found\n";
     } else {
-        // Rewrite the file with updated content
+        
         ofstream outFile(filename, ios::trunc); // Clear old content
         for (int i = 0; i < totalRecords; i++) {
             outFile << studentArray[i].toCSV() << "\n";
@@ -165,11 +159,9 @@ void updateStudent(string filename) {
         cout << "\nStudent information updated successfully!\n";
     }
 
-    // Free allocated memory
     delete[] studentArray;
 }
 
-// Requirement 5: Delete student record permanently
 void deleteStudent(string filename) {
     string targetRoll;
     cout << "\nEnter Roll Number to delete: ";
@@ -191,7 +183,6 @@ void deleteStudent(string filename) {
     while (getline(inFile, roll, ',') && getline(inFile, name, ',') && getline(inFile, ageStr)) {
         if (roll == targetRoll) {
             found = true;
-            // Skip saving this record to memory (effectively deleting it)
             continue; 
         }
         studentArray[index].setRollNumber(roll);
@@ -230,10 +221,9 @@ void initializeSampleData(string filename) {
     }
 }
 
-// Requirement 7: Menu-driven system using a loop and switch statement
 int main() {
     string filename = "student.txt";
-    initializeSampleData(filename); // Populates text file with assignment values
+    initializeSampleData(filename); 
 
     int choice;
     do {
